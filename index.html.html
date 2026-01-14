@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pentru Noi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px 0;
+            background: linear-gradient(to bottom, #050511, #2a1b3d, #522546);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Lora', serif;
+            color: #fff;
+            overflow-y: auto; /* Scroll permis */
+            overflow-x: hidden;
+        }
+
+        /* Stele Generate din Cod */
+        .star {
+            position: fixed;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+            opacity: 0.8;
+            z-index: -1;
+        }
+
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+
+        .card {
+            background: rgba(255, 245, 235, 0.95);
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 0 40px rgba(255, 107, 107, 0.3);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            margin: 20px auto;
+            position: relative;
+            z-index: 10;
+            border: 2px solid #d6334b;
+            color: #4a1524;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            margin: 0;
+            color: #d6334b;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            color: #7f4153;
+            font-style: italic;
+        }
+
+        .track {
+            position: relative;
+            height: 50px;
+            border-bottom: 2px dashed #d6334b;
+            margin: 20px 0;
+        }
+
+        .train-emoji {
+            position: absolute;
+            bottom: 2px;
+            font-size: 40px;
+            left: 5%;
+            transition: left 1s;
+        }
+
+        .moving { animation: moveRight 6s linear infinite; }
+        @keyframes moveRight { from { left: -20%; } to { left: 120%; } }
+
+        .timer-box {
+            background: #fff;
+            padding: 10px;
+            border-radius: 15px;
+            border: 1px solid #ffccd5;
+            margin: 20px 0;
+        }
+
+        .timer-val {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #d6334b;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #d6334b, #ff6b6b);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(214, 51, 75, 0.4);
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        #secret-area {
+            display: none;
+            margin-top: 20px;
+            border-top: 1px solid #ffccd5;
+            padding-top: 15px;
+        }
+
+        .video-wrapper {
+            margin-top: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #d6334b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Diana</h1>
+        <div class="subtitle">Ești destinația mea preferată.</div>
+
+        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:0.8rem; color:#7f4153;">
+            <span>Comănești</span>
+            <span>Ozun</span>
+        </div>
+
+        <div class="track">
+            <div class="train-emoji" id="train">🚂</div>
+        </div>
+
+        <div style="text-align:center;">
+             <span id="status-badge" style="background:#ffecec; padding:5px 10px; border-radius:10px; font-size:0.75rem; color:#d6334b; font-weight:bold;">Aștept plecarea trenului...</span>
+        </div>
+
+        <div class="timer-box">
+            <div style="font-size:0.7rem; text-transform:uppercase; margin-bottom:5px;">Timp până la plecare (04:29)</div>
+            <div class="timer-val" id="timer">00:00:00</div>
+        </div>
+
+        <button class="btn" onclick="reveal()">
+            ❤️ Deschide Scrisoarea
+        </button>
+
+        <div id="secret-area">
+            <p style="font-style:italic; font-size:1rem; line-height:1.5;">
+                "Nu mai număr kilometrii, număr bătăile inimii până te văd. Oricât de lung e drumul, tu ești cea mai frumoasă destinație a vieții mele."
+            </p>
+            <h2 style="font-family:'Great Vibes'; color:#d6334b;">Te iubesc!</h2>
+            
+            <div class="video-wrapper" id="music-container"></div>
+        </div>
+    </div>
+
+    <script>
+        // GENERARE STELE
+        const body = document.body;
+        for(let i=0; i<50; i++){
+            let d = document.createElement('div');
+            d.className = 'star';
+            d.style.left = Math.random()*100 + '%';
+            d.style.top = Math.random()*100 + '%';
+            let s = Math.random()*3;
+            d.style.width = s+'px'; d.style.height = s+'px';
+            d.style.animationDuration = (Math.random()*3+2)+'s';
+            body.appendChild(d);
+        }
+
+        // TIMER 04:29
+        const DEP_HOUR = 4; const DEP_MIN = 29;
+        function getTarget() {
+            const now = new Date(); const t = new Date();
+            const d = now.getDay(); let add = 6 - d;
+            if (d === 6 && (now.getHours() > DEP_HOUR || (now.getHours() === DEP_HOUR && now.getMinutes() >= DEP_MIN))) add = 7;
+            else if (d === 6) add = 0; else if (add < 0) add += 7; else if (d === 0) add = 6;
+            t.setDate(now.getDate() + add); t.setHours(DEP_HOUR, DEP_MIN, 0, 0); return t;
+        }
+        const target = getTarget();
+        const train = document.getElementById('train');
+        const timerEl = document.getElementById('timer');
+        const statusEl = document.getElementById('status-badge');
+
+        function update() {
+            const diff = target - new Date();
+            if (diff <= 0) {
+                if (!train.classList.contains('moving')) {
+                    train.classList.add('moving');
+                    statusEl.innerText = "❤️ TRENUL A PLECAT SPRE TINE! ❤️";
+                    statusEl.style.background = "#d6334b"; statusEl.style.color = "#fff";
+                }
+                const el = Math.abs(diff);
+                const h = Math.floor(el/3600000); const m = Math.floor((el%3600000)/60000); const s = Math.floor((el%60000)/1000);
+                timerEl.innerText = `${h<10?'0'+h:h}:${m<10?'0'+m:m}:${s<10?'0'+s:s}`;
+            } else {
+                train.classList.remove('moving');
+                const days = Math.floor(diff/86400000);
+                const h = Math.floor((diff%86400000)/3600000); const m = Math.floor((diff%3600000)/60000); const s = Math.floor((diff%60000)/1000);
+                if(days>0) timerEl.innerText=`${days}z ${h}:${m}:${s}`;
+                else timerEl.innerText=`${h<10?'0'+h:h}:${m<10?'0'+m:m}:${s<10?'0'+s:s}`;
+            }
+        }
+        setInterval(update, 1000); update();
+
+        function reveal() {
+            document.getElementById('secret-area').style.display = 'block';
+            document.querySelector('.btn').style.display = 'none';
+            document.getElementById('music-container').innerHTML = `
+                <iframe width="100%" height="200" 
+                src="https://www.youtube.com/embed/HBxt_v001kk?autoplay=1" 
+                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            `;
+        }
+    </script>
+</body>
+</html>
