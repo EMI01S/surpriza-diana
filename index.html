@@ -3,147 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pentru Noi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <title>Călătoria Noastră</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             padding: 20px 0;
-            background: linear-gradient(to bottom, #050511, #2a1b3d, #522546);
+            /* Fundal Deep Space */
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Lora', serif;
+            font-family: 'Montserrat', sans-serif;
             color: #fff;
-            overflow-y: auto; /* Scroll permis */
+            overflow-y: auto;
             overflow-x: hidden;
         }
 
-        /* Stele Generate din Cod */
+        /* --- STELE FIXE --- */
         .star {
             position: fixed;
             background: white;
             border-radius: 50%;
-            animation: twinkle 3s infinite ease-in-out;
+            animation: twinkle 4s infinite ease-in-out;
             opacity: 0.8;
             z-index: -1;
         }
+        @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
 
-        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+        /* --- STELE CAZATOARE --- */
+        .shooting-star {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            height: 2px;
+            background: linear-gradient(-45deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+            border-radius: 999px;
+            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 1));
+            animation: tail 3000ms ease-in-out infinite, shooting 3000ms ease-in-out infinite;
+            z-index: -1;
+            opacity: 0;
+        }
+        @keyframes tail { 0% { width: 0; } 30% { width: 100px; } 100% { width: 0; } }
+        @keyframes shooting { 0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 1; } 100% { transform: translateX(-300px) translateY(300px) rotate(-45deg); opacity: 0; } }
 
+        /* --- CARDUL PRINCIPAL --- */
         .card {
-            background: rgba(255, 245, 235, 0.95);
-            padding: 25px;
-            border-radius: 25px;
-            box-shadow: 0 0 40px rgba(255, 107, 107, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
             text-align: center;
-            width: 90%;
-            max-width: 400px;
+            width: 85%;
+            max-width: 420px;
             margin: 20px auto;
             position: relative;
             z-index: 10;
-            border: 2px solid #d6334b;
-            color: #4a1524;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         h1 {
             font-family: 'Great Vibes', cursive;
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin: 0;
-            color: #d6334b;
+            background: linear-gradient(to right, #ff9a9e, #fecfef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 154, 158, 0.3);
         }
 
         .subtitle {
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-            color: #7f4153;
-            font-style: italic;
+            font-size: 0.85rem;
+            margin-bottom: 25px;
+            color: #e0e0e0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        .track {
+        /* --- TRENUL SI SINA --- */
+        .track-container {
             position: relative;
-            height: 50px;
-            border-bottom: 2px dashed #d6334b;
-            margin: 20px 0;
+            margin: 40px 0;
         }
 
-        .train-emoji {
+        .cities {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #ff9a9e;
+            margin-bottom: 5px;
+        }
+
+        .line {
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .train-group {
             position: absolute;
-            bottom: 2px;
-            font-size: 40px;
+            top: -25px;
             left: 5%;
-            transition: left 1s;
+            transition: left 1s ease-in-out;
         }
 
-        .moving { animation: moveRight 6s linear infinite; }
-        @keyframes moveRight { from { left: -20%; } to { left: 120%; } }
+        .train-icon {
+            font-size: 40px;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
+        }
 
+        /* Fumul inimioare */
+        .steam {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            background: #ff9a9e;
+            border-radius: 50%;
+            opacity: 0;
+            animation: rise 2s infinite;
+        }
+        .steam:nth-child(2) { animation-delay: 0.5s; }
+        .steam:nth-child(3) { animation-delay: 1s; }
+
+        @keyframes rise {
+            0% { transform: translateY(0) scale(1); opacity: 0.8; }
+            100% { transform: translateY(-30px) scale(2); opacity: 0; }
+        }
+
+        .train-moving { animation: moveTrain 5s linear infinite; }
+        @keyframes moveTrain { 0% { left: -15%; } 100% { left: 115%; } }
+
+        /* --- TIMER --- */
         .timer-box {
-            background: #fff;
-            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
             border-radius: 15px;
-            border: 1px solid #ffccd5;
-            margin: 20px 0;
+            margin: 25px 0;
+            border: 1px solid rgba(255,255,255,0.1);
         }
-
         .timer-val {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #d6334b;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
             font-variant-numeric: tabular-nums;
         }
+        .timer-label { font-size: 0.7rem; opacity: 0.8; letter-spacing: 1px; text-transform: uppercase; }
 
+        /* --- BUTON --- */
         .btn {
-            background: linear-gradient(45deg, #d6334b, #ff6b6b);
+            background: linear-gradient(45deg, #ff758c, #ff7eb3);
             color: white;
             border: none;
-            padding: 15px 30px;
+            padding: 16px 35px;
             font-size: 1rem;
             border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
-            box-shadow: 0 5px 15px rgba(214, 51, 75, 0.4);
+            box-shadow: 0 10px 20px rgba(255, 117, 140, 0.4);
             width: 100%;
-            margin-bottom: 10px;
+            transition: transform 0.2s;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
+        .btn:active { transform: scale(0.95); }
 
+        /* --- MESAJUL SECRET --- */
         #secret-area {
             display: none;
-            margin-top: 20px;
-            border-top: 1px solid #ffccd5;
-            padding-top: 15px;
+            margin-top: 30px;
+            animation: openLetter 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            background: rgba(255,255,255,0.95);
+            color: #333;
+            padding: 20px;
+            border-radius: 15px;
+            position: relative;
+        }
+        
+        /* Triunghi mic sus la mesaj (ca un speech bubble) */
+        #secret-area::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 0 10px 10px 10px;
+            border-style: solid;
+            border-color: transparent transparent rgba(255,255,255,0.95) transparent;
         }
 
+        @keyframes openLetter { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .quote {
+            font-style: italic;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        /* --- PLAYER VIDEO DESIGN --- */
         .video-wrapper {
             margin-top: 15px;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
-            border: 2px solid #d6334b;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border: 4px solid #ff9a9e;
         }
     </style>
 </head>
 <body>
 
+    <div id="stars-container"></div>
+    <div class="shooting-star" style="top: 20%; left: 20%; animation-delay: 0s;"></div>
+    <div class="shooting-star" style="top: 50%; left: 70%; animation-delay: 2s;"></div>
+    <div class="shooting-star" style="top: 80%; left: 40%; animation-delay: 4s;"></div>
+
     <div class="card">
         <h1>Diana</h1>
-        <div class="subtitle">Ești destinația mea preferată.</div>
+        <div class="subtitle">Ești Universul Meu</div>
 
-        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:0.8rem; color:#7f4153;">
-            <span>Comănești</span>
-            <span>Ozun</span>
-        </div>
-
-        <div class="track">
-            <div class="train-emoji" id="train">🚂</div>
+        <div class="track-container">
+            <div class="cities">
+                <span>Comănești</span>
+                <span>Ozun</span>
+            </div>
+            <div class="line"></div>
+            <div class="train-group" id="train">
+                <div class="steam"></div>
+                <div class="steam"></div>
+                <div class="train-icon">🚂</div>
+            </div>
         </div>
 
         <div style="text-align:center;">
-             <span id="status-badge" style="background:#ffecec; padding:5px 10px; border-radius:10px; font-size:0.75rem; color:#d6334b; font-weight:bold;">Aștept plecarea trenului...</span>
+             <span id="status-badge" style="background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; color: #fff; font-weight: bold; border: 1px solid rgba(255,255,255,0.3);">
+                ⏳ Aștept plecarea trenului
+             </span>
         </div>
 
         <div class="timer-box">
-            <div style="font-size:0.7rem; text-transform:uppercase; margin-bottom:5px;">Timp până la plecare (04:29)</div>
+            <div class="timer-label" id="timer-title">Timp până la plecare (04:29)</div>
             <div class="timer-val" id="timer">00:00:00</div>
         </div>
 
@@ -152,67 +260,103 @@
         </button>
 
         <div id="secret-area">
-            <p style="font-style:italic; font-size:1rem; line-height:1.5;">
+            <p class="quote">
                 "Nu mai număr kilometrii, număr bătăile inimii până te văd. Oricât de lung e drumul, tu ești cea mai frumoasă destinație a vieții mele."
             </p>
-            <h2 style="font-family:'Great Vibes'; color:#d6334b;">Te iubesc!</h2>
+            <h2 style="font-family:'Great Vibes'; color:#d6334b; font-size: 2rem; margin: 10px 0;">Te iubesc!</h2>
+            
+            <p style="font-size:0.7rem; color:#888; text-transform:uppercase; margin-top:15px; margin-bottom: 5px; font-weight: bold;">Now Playing:</p>
             
             <div class="video-wrapper" id="music-container"></div>
         </div>
     </div>
 
     <script>
-        // GENERARE STELE
-        const body = document.body;
-        for(let i=0; i<50; i++){
+        // --- GENERARE STELE FUNDAL ---
+        const starsCont = document.getElementById('stars-container');
+        for(let i=0; i<70; i++){
             let d = document.createElement('div');
             d.className = 'star';
             d.style.left = Math.random()*100 + '%';
             d.style.top = Math.random()*100 + '%';
-            let s = Math.random()*3;
+            let s = Math.random()*2 + 1;
             d.style.width = s+'px'; d.style.height = s+'px';
-            d.style.animationDuration = (Math.random()*3+2)+'s';
-            body.appendChild(d);
+            d.style.animationDuration = (Math.random()*3+3)+'s';
+            d.style.animationDelay = Math.random()*5+'s';
+            starsCont.appendChild(d);
         }
 
-        // TIMER 04:29
-        const DEP_HOUR = 4; const DEP_MIN = 29;
+        // --- TIMER LOGIC (04:29) ---
+        const DEP_HOUR = 4; 
+        const DEP_MIN = 29;
+
         function getTarget() {
-            const now = new Date(); const t = new Date();
-            const d = now.getDay(); let add = 6 - d;
-            if (d === 6 && (now.getHours() > DEP_HOUR || (now.getHours() === DEP_HOUR && now.getMinutes() >= DEP_MIN))) add = 7;
-            else if (d === 6) add = 0; else if (add < 0) add += 7; else if (d === 0) add = 6;
-            t.setDate(now.getDate() + add); t.setHours(DEP_HOUR, DEP_MIN, 0, 0); return t;
+            const now = new Date(); 
+            const t = new Date();
+            const d = now.getDay(); // 6 = Sambata
+            let add = 6 - d;
+
+            // Daca e Sambata si a trecut ora, ia urmatoarea saptamana
+            if (d === 6 && (now.getHours() > DEP_HOUR || (now.getHours() === DEP_HOUR && now.getMinutes() >= DEP_MIN))) {
+                add = 7;
+            } else if (d === 6) {
+                add = 0;
+            } else if (add < 0) {
+                add += 7;
+            } else if (d === 0) { // Duminica
+                add = 6;
+            }
+
+            t.setDate(now.getDate() + add); 
+            t.setHours(DEP_HOUR, DEP_MIN, 0, 0); 
+            return t;
         }
+
         const target = getTarget();
         const train = document.getElementById('train');
         const timerEl = document.getElementById('timer');
         const statusEl = document.getElementById('status-badge');
+        const timerTitle = document.getElementById('timer-title');
 
         function update() {
-            const diff = target - new Date();
+            const now = new Date();
+            const diff = target - now;
+
             if (diff <= 0) {
-                if (!train.classList.contains('moving')) {
-                    train.classList.add('moving');
-                    statusEl.innerText = "❤️ TRENUL A PLECAT SPRE TINE! ❤️";
-                    statusEl.style.background = "#d6334b"; statusEl.style.color = "#fff";
+                // A PLECAT
+                if (!train.classList.contains('train-moving')) {
+                    train.classList.add('train-moving');
+                    statusEl.innerHTML = "🚀 SUNT PE DRUM SPRE TINE!";
+                    statusEl.style.background = "#2ecc71"; // Verde
+                    statusEl.style.borderColor = "#2ecc71";
+                    timerTitle.innerText = "TIMP SCURS PE DRUM";
                 }
                 const el = Math.abs(diff);
-                const h = Math.floor(el/3600000); const m = Math.floor((el%3600000)/60000); const s = Math.floor((el%60000)/1000);
+                const h = Math.floor(el/3600000); 
+                const m = Math.floor((el%3600000)/60000); 
+                const s = Math.floor((el%60000)/1000);
                 timerEl.innerText = `${h<10?'0'+h:h}:${m<10?'0'+m:m}:${s<10?'0'+s:s}`;
             } else {
-                train.classList.remove('moving');
+                // IN GARA
+                train.classList.remove('train-moving');
                 const days = Math.floor(diff/86400000);
-                const h = Math.floor((diff%86400000)/3600000); const m = Math.floor((diff%3600000)/60000); const s = Math.floor((diff%60000)/1000);
+                const h = Math.floor((diff%86400000)/3600000); 
+                const m = Math.floor((diff%3600000)/60000); 
+                const s = Math.floor((diff%60000)/1000);
+                
                 if(days>0) timerEl.innerText=`${days}z ${h}:${m}:${s}`;
                 else timerEl.innerText=`${h<10?'0'+h:h}:${m<10?'0'+m:m}:${s<10?'0'+s:s}`;
             }
         }
-        setInterval(update, 1000); update();
+        setInterval(update, 1000); 
+        update();
 
+        // --- REVEAL FUNCTION ---
         function reveal() {
             document.getElementById('secret-area').style.display = 'block';
             document.querySelector('.btn').style.display = 'none';
+            
+            // Player Video
             document.getElementById('music-container').innerHTML = `
                 <iframe width="100%" height="200" 
                 src="https://www.youtube.com/embed/HBxt_v001kk?autoplay=1" 
